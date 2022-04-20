@@ -5,15 +5,26 @@ using namespace std;
 vector<vector<int>> ans;
 
 bool isSafe(vector<vector<int>> b, int row,int col,int n){
-    for(int j=0;j<n;j++){
-        if(b[row][j] == 1 && j!= col) return false;        
+    // check left row
+    int j=col;
+    while(j-- >= 0){
+        if(b[row][j]==1 && j!=col) return false;
     }
-    for(int i=0;i<n;i++){
-        if(b[i][col]==1 && i!= row) return false ;        
+    // check upward diagonal
+    int i=row;
+    j=col;
+    while(j >= 0  && i>=0 ){
+        if(b[i][j] ==1 && i!=row && j!=col) return false;
+        i--;j--;
     }
-
-    for(int i=0,j=0;i<n;i++,j++)
-        if(b[i][j]==1 && i!=row && j!=col) return false;    
+    // check downward diagonal
+    i=row;j=col;
+    while(j<n && i < n) {
+        if(b[i][j]==1 && i!=row && j!=col) return false;
+        i++;j--;
+    }
+    
+    
     
     return true;
 }
@@ -54,9 +65,10 @@ int main(){
     int n;cin>>n;
     vector<vector<int>> b( n , vector<int> (n, 0));
     nqueen(b,0,n);
-    cout<<"Returned from nqueen"<<endl;
-    vector<pair<int,int>> sol;
+    // cout<<"Returned from nqueen"<<endl;
+    // cout<<ans.empty()<<endl;
         for (int i = 0; i < n; i++)
+        
         {
             for (int j = 0; j < n; j++)
             {
